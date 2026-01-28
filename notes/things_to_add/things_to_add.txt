@@ -1,0 +1,7 @@
+Add more sounds.
+
+Add more powerups.
+
+Add a background.
+
+Make proper levels.
