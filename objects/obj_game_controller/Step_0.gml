@@ -1,4 +1,5 @@
 // Check room restart
+if (room != rm_start) {
 if (instance_number(obj_brick_white) <= 0) {
 if (instance_number(obj_brick_red) <= 0) {
 if (instance_number(obj_brick_green) <= 0) {
@@ -7,6 +8,7 @@ if (instance_number(obj_brick_orange) <= 0) {
 if (instance_number(obj_brick_yellow) <= 0) {
 if (instance_number(obj_brick_fuchsia) <= 0) {
 if (instance_number(obj_brick_metal) <= 0) {
+}
 if (room == rm_lvl002) {
 	room_goto(rm_lvl001);
 } else {

@@ -18,7 +18,7 @@ if (bbox_top < 0) {
 				global.high_score = global.player_score;
 		    }
 		    // Set controller state
-		    with (obj_controller) {
+		    with (obj_game_controller) {
 				state ="GAMEOVER";
 		    }
 		} else {
