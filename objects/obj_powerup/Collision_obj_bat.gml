@@ -1,5 +1,6 @@
 // Powerup Logic
 // Check to see what frame is being used by the sprite
+audio_play_sound(snd_powerup, 0, false);
 switch(image_index) {
 	case 0: // Expand the bat
 	with (obj_bat) {

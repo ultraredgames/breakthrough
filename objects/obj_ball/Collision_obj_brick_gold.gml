@@ -10,4 +10,4 @@ move_bounce_all(true); // Set the bounce angle
 if (speed < 12) {
 	speed += 0.1; // Make the ball faster
 }
-//audio_play_sound(snd_infinitetough, 0, false);
+audio_play_sound(snd_tough, 0, false);

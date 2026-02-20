@@ -12,8 +12,9 @@ if (speed < 12) {
 }
 if (obj_brick_metal.hp <= 0) {
 	global.player_score += obj_brick_metal.points; // Add to the score
-	//audio_play_sound(snd_tough, 0, false);
+	audio_play_sound(snd_breaktough, 0, false);
 	instance_destroy(other); // Other being the brick
 } else {
 	--obj_brick_metal.hp; // Reduce HP
+	audio_play_sound(snd_tough, 0, false);
 }

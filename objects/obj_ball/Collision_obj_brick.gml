@@ -11,5 +11,5 @@ if (speed < 12) {
 	speed += 0.1; // Make the ball faster
 }
 global.player_score += obj_brick.points; // Add to the score
-//audio_play_sound(snd_break, 0, false);
+audio_play_sound(snd_break, 0, false);
 instance_destroy(other); // Other being the brick

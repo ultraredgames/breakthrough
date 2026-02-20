@@ -6,6 +6,6 @@ if (!go) {
 		go = true;
 		speed = spd;
 		direction = dir;
-		//audio_play_sound(snd_click, 0, false);
+		audio_play_sound(snd_click, 0, false);
 	}
 }

@@ -32,5 +32,5 @@ if (bbox_top < 0) {
 if (speed < 12) {
 	speed += 0.1;
 }
-//audio_play_sound(snd_bounce, 0, false);
+audio_play_sound(snd_bounce, 0, false, 1, 0, random_range(0.3, 0.6));
 direction += 2 - random(4);
