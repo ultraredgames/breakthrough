@@ -15,6 +15,12 @@ if keyboard_check(vk_right) {
 		x = room_width - sprite_get_xoffset(sprite_index);
 	}
 }
+if (keyboard_check(vk_space)) {
+	// Increase the speed of the bat
+	spd = 10.5;
+} else {
+	spd = 7;
+}
 // Move the ball object with the bat if the ball isn't moving yet
 with (obj_ball) {
 	if (!go) {
