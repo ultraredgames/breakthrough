@@ -15,10 +15,14 @@ if keyboard_check(vk_right) {
 		x = room_width - sprite_get_xoffset(sprite_index);
 	}
 }
-if (keyboard_check(vk_space)) {
-	// Increase the speed of the bat
+if (keyboard_check(ord("C"))) {
+	// Fast speed
 	spd = 10.5;
+} else if (keyboard_check(ord("X"))) {
+	// Slow speed
+	spd = 3.5;
 } else {
+	// Normal speed
 	spd = 7;
 }
 // Move the ball object with the bat if the ball isn't moving yet

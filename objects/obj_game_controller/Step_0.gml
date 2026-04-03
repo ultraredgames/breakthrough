@@ -1,7 +1,7 @@
 // Check room restart
 if (room != rm_start) {
 	if (instance_number(obj_brick) - instance_number(obj_brick_gold) == 0) {
-		if (room == rm_lvl002) {
+		if (room == rm_lvl003) {
 			room_goto(rm_lvl001);
 		} else {
 			room_goto_next();
