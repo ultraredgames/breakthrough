@@ -1,16 +1,13 @@
 {
   "$GMObject":"",
-  "%Name":"obj_brick_parent",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":1,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"obj_room_transition",
+  "eventList":[],
   "managed":true,
-  "name":"obj_brick_parent",
+  "name":"obj_room_transition",
   "overriddenProperties":[],
   "parent":{
-    "name":"Bricks",
-    "path":"folders/Objects/Bricks.yy",
+    "name":"Fade",
+    "path":"folders/Objects/Fade.yy",
   },
   "parentObjectId":null,
   "persistent":false,

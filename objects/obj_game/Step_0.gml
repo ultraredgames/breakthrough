@@ -1,0 +1,2 @@
+// Check room restart
+// FIXME
