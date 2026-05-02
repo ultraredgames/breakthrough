@@ -1,9 +1,7 @@
 {
   "$GMObject":"",
   "%Name":"obj_brick_silver",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"obj_brick_silver",
   "overriddenProperties":[],
@@ -12,8 +10,8 @@
     "path":"folders/Objects/Bricks.yy",
   },
   "parentObjectId":{
-    "name":"obj_brick",
-    "path":"objects/obj_brick/obj_brick.yy",
+    "name":"obj_brick_parent",
+    "path":"objects/obj_brick_parent/obj_brick_parent.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,
