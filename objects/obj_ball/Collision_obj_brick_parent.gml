@@ -12,6 +12,7 @@ if (speed < 12) {
 }
 if (other.hp > 0) {
     if (--other.hp == 0) {
+		global.player_score += other.points; // Add to the score.
 //		audio_play_sound(snd_break, 0, false);
         instance_destroy(other); // Other being the brick
     } else {
