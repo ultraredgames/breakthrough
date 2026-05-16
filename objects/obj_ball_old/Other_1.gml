@@ -19,7 +19,7 @@ if (bbox_top < 0) {
 		    }
 		    // Set controller state
 		    with (obj_game_controller_old) {
-				state ="GAMEOVER";
+				state = "GAMEOVER";
 		    }
 		} else {
 			// Only create a new ball if the player has lives

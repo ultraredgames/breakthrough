@@ -7,8 +7,8 @@ while (place_meeting(x, y, other)) {
 	y += lengthdir_y(1, _dir);
 }
 move_bounce_all(true); // Set the bounce angle
-if (speed < 12) {
-	speed += 0.1; // Make the ball faster
+if (speed < 16) {
+	speed += 0.1333; // Make the ball faster
 }
 if (other.hp > 0) {
     if (--other.hp == 0) {

@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_transitions_old",
+  "%Name":"scr_game_layout",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_transitions_old",
+  "name":"scr_game_layout",
   "parent":{
-    "name":"Old",
-    "path":"folders/Scripts/Old.yy",
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
