@@ -16,28 +16,36 @@ if (bbox_left < GAME_AREA_LEFT || bbox_right > GAME_AREA_RIGHT) {
 	x = clamp(x, sprite_get_xoffset(sprite_index),
 		GAME_AREA_RIGHT - sprite_get_xoffset(sprite_index));
 	hspeed *= -1;
-	// With each bounce, increase the ball speed up to a limit of 12 pixels per frame
+	// With each bounce, increase the ball speed up to a limit of 12 pixels per frame.
 	if (speed < 16) {
 		speed += 0.1333;
 	}
 //	audio_play_sound(snd_bounce, 0, false, 1, 0, random_range(0.3, 0.6));
 	direction += 2 - random(4);
 }
-// Check if the ball is colliding with the top of the room
+// Check if the ball is colliding with the top of the room.
 if (bbox_top < GAME_AREA_TOP) {
 	vspeed *= -1;
-	// With each bounce, increase the ball speed up to a limit of 12 pixels per frame
+	// With each bounce, increase the ball speed up to a limit of 12 pixels per frame.
 	if (speed < 16) {
 		speed += 0.1333;
 	}
 //	audio_play_sound(snd_bounce, 0, false, 1, 0, random_range(0.3, 0.6));
 	direction += 2 - random(4);
 } else {
-	// Check if the ball is leaving the bottom of the room
-	// TODO - Respawn ball on the player object.
-	if (bbox_bottom > room_height) {
-		x = GAME_AREA_RIGHT / 2;
-		y = room_height / 2;
-//		direction = random(359);
+	// Check if the ball is leaving the bottom of the room.
+	if (bbox_bottom > room_height + TILE_SIZE * 2) {
+		global.player_lives -= 1;
+		if (global.player_lives <= 0) {
+			// Check for new high score.
+			if (global.player_score > global.high_score) {
+				global.high_score = global.player_score;
+		    }
+			room_goto(rm_gameover);
+		} else {
+			// Only create a new ball if the player has lives.
+		    instance_create_layer(obj_player.x, ystart, layer, obj_ball);
+			instance_destroy();
+		}
 	}
 }
