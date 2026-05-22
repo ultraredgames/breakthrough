@@ -53,7 +53,7 @@ function __append_effect_entry(entry)
     }
 
     if (!is_undefined(entry.hash)) {
-        // Entry is named, add it to the named entries structure.
+        // Effect is named, add entry to the named entries structure.
         struct_set_from_hash(__named, entry.hash, entry);
     }
 }
@@ -80,8 +80,18 @@ function __make_effect_entry(hash, scope, step_func, interval)
     // not specified and `_scope` does not expose a `step()` method.
     var _step_method = step_func ? method(_scope, step_func) : _scope.step;
 
+    // We now have to "sandbox" the step method into its own caller scope,
+    // otherwise clever usage of `other` would allow the step function tp
+    // escape its scope, and provide it access to our internals, which we
+    // still do not want.
+    var _safe_step_method = method({
+        _step_method
+    }, function() {
+        return _step_method();
+    });
+
     // Build and return effect entry.
-    return new EffectEntry(hash, _step_method, interval);
+    return new EffectEntry(hash, _safe_step_method, interval);
 }
 
 /**
@@ -118,7 +128,7 @@ function __remove_effect_entry(entry)
     }
 
     if (!is_undefined(entry.hash)) {
-        // Entry is named, remove it from the named entries structure.
+        // Effect is named, remove entry from the named entries structure.
         struct_remove_from_hash(__named, entry.hash);
     }
 }
