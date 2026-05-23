@@ -55,11 +55,11 @@ obj_effects.add_named("orchestrator", self, function() {
     }, EFFECT_INTERVAL_RANDOM);
 
     // TEST - Global scope.
-    obj_effects.add(global, function() {
-        show_debug_message(
-            $"|EFFECTS| Global scope: {self}");
-        return false;
-    }, EFFECT_INTERVAL_RANDOM);
+    // obj_effects.add(global, function() {
+    //     show_debug_message(
+    //         $"|EFFECTS| Global scope: {self}");
+    //     return false;
+    // }, EFFECT_INTERVAL_RANDOM);
 
     // TEST - Simple scope.
     obj_effects.add({
@@ -109,11 +109,79 @@ obj_effects.add_named("orchestrator", self, function() {
         return _keep_going;
     }, EFFECT_INTERVAL_RANDOM);
 
-    // TEST - Effect base scope.
+    // TEST - Abstract base effect scope.
     obj_effects.add(new Effect(), function() {
         show_debug_message(
             $"|EFFECTS| Abstract base effect scope: {self}");
         return false;
+    }, EFFECT_INTERVAL_RANDOM);
+
+    // TEST - Animation scope, undefined context.
+    obj_effects.add(new Animation(1, {
+        foo: { TODO: "foo" },
+        bar: { TODO: "bar" }
+    }), function() {
+        var _keep_going = step();
+        show_debug_message(
+            $"|ANIMATIONS| Animation scope, undefined context: {self}");
+        return _keep_going;
+    }, EFFECT_INTERVAL_RANDOM);
+
+    // TEST - Animation scope, empty context.
+    obj_effects.add(new Animation(1, {
+        foo: { TODO: "foo" },
+        bar: { TODO: "bar" }
+    }, {}), function() {
+        var _keep_going = step();
+        show_debug_message(
+            $"|ANIMATIONS| Animation scope, empty context: {self}");
+        return _keep_going;
+    }, EFFECT_INTERVAL_RANDOM);
+
+    // TEST - Animation scope, self context.
+    obj_effects.add(new Animation(1, {
+        foo: { TODO: "foo" },
+        bar: { TODO: "bar" }
+    }, self), function() {
+        var _keep_going = step();
+        show_debug_message(
+            $"|ANIMATIONS| Animation scope, self context: {self}");
+        return _keep_going;
+    }, EFFECT_INTERVAL_RANDOM);
+
+    // TEST - Animation scope, other context.
+    obj_effects.add(new Animation(1, {
+        foo: { TODO: "foo" },
+        bar: { TODO: "bar" }
+    }, other), function() {
+        var _keep_going = step();
+        show_debug_message(
+            $"|ANIMATIONS| Animation scope, other context: {self}");
+        return _keep_going;
+    }, EFFECT_INTERVAL_RANDOM);
+
+    // TEST - Animation scope, global context.
+    // obj_effects.add(new Animation(1, {
+    //     foo: { TODO: "foo" },
+    //     bar: { TODO: "bar" }
+    // }, global), function() {
+    //     var _keep_going = step();
+    //     show_debug_message(
+    //         $"|ANIMATIONS| Animation scope, global context: {self}");
+    //     return _keep_going;
+    // }, EFFECT_INTERVAL_RANDOM);
+
+    // TEST - Animation scope, simple context.
+    obj_effects.add(new Animation(1, {
+        foo: { TODO: "foo" },
+        bar: { TODO: "bar" }
+    }, {
+        __name: "__simple_context"
+    }), function() {
+        var _keep_going = step();
+        show_debug_message(
+            $"|ANIMATIONS| Animation scope, simple context: {self}");
+        return _keep_going;
     }, EFFECT_INTERVAL_RANDOM);
 
     // Orchestrator effect runs forever.

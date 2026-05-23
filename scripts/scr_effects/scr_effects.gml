@@ -10,7 +10,7 @@ function EffectEntry(_hash, _step_method, _interval) constructor
 {
     if (_interval <= 0) {
         // Interval must be a positive non-zero number.
-        throw $"Invalid effect interval {interval}.";
+        throw $"Invalid effect interval {_interval}.";
     }
 
     hash = _hash;
@@ -28,4 +28,28 @@ function EffectEntry(_hash, _step_method, _interval) constructor
  */
 function Effect() constructor
 {
+}
+
+function Animation(_duration, _variables, _context = undefined)
+: Effect() constructor
+{
+    if (_duration <= 0) {
+        // Duration must be a positive non-zero number.
+        throw $"Invalid animation duration {_duration}.";
+    }
+
+    duration = _duration;
+    variables = _variables;
+    context = _context;
+    elapsed = 0;
+
+    static step = function() {
+        ++elapsed;
+        // TODO - Update variables.
+        show_debug_message(
+            $"|ANIMATIONS| Static step method: {self}");
+
+        // Stop animation when duration is reached.
+        return elapsed < duration;
+    };
 }
