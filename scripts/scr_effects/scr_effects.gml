@@ -30,7 +30,14 @@ function Effect() constructor
 {
 }
 
-function Animation(_duration, _variables, _context = undefined)
+/**
+ * An effect that animates a set of variables for specified duration.
+ * @param {real} _duration The duration of the animation, in steps.
+ * @param {any} _variables The struct holding the variables to animate.
+ * @param {any} [_context] The context provided to the step function. Defaults to `undefined`.
+ */
+function Animation(
+    _duration, _variables, _context = undefined)
 : Effect() constructor
 {
     if (_duration <= 0) {
@@ -43,11 +50,19 @@ function Animation(_duration, _variables, _context = undefined)
     context = _context;
     elapsed = 0;
 
+    /**
+     * Computes the current values of all the animated variables and
+     * determines whether the animation should stop.
+     */
     static step = function() {
+        // Compute current variable values.
         ++elapsed;
-        // TODO - Update variables.
         show_debug_message(
-            $"|ANIMATIONS| Static step method: {self}");
+            $"|ANIMATIONS  | TODO - Compute current values: {variables}");
+        var _progress = elapsed / duration;
+        struct_foreach(variables, function(name, variable) {
+            // TODO
+        });
 
         // Stop animation when duration is reached.
         return elapsed < duration;

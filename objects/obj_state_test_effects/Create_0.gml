@@ -29,35 +29,35 @@ obj_effects.add_named("orchestrator", self, function() {
     // TEST - Empty scope.
     obj_effects.add({}, function() {
         show_debug_message(
-            $"|EFFECTS| Empty scope: {self}");
+            $"|EFFECTS     | Empty scope: {self}");
         return false;
     }, EFFECT_INTERVAL_RANDOM);
 
     // TEST - Undefined scope.
     obj_effects.add(undefined, function() {
         show_debug_message(
-            $"|EFFECTS| Undefined scope: {self}");
+            $"|EFFECTS     | Undefined scope: {self}");
         return false;
     }, EFFECT_INTERVAL_RANDOM);
 
     // TEST - Self scope.
     obj_effects.add(self, function() {
         show_debug_message(
-            $"|EFFECTS| Self scope: {self}");
+            $"|EFFECTS     | Self scope: {self}");
         return false;
     }, EFFECT_INTERVAL_RANDOM);
 
     // TEST - Other scope.
     obj_effects.add(other, function() {
         show_debug_message(
-            $"|EFFECTS| Other scope: {self}");
+            $"|EFFECTS     | Other scope: {self}");
         return false;
     }, EFFECT_INTERVAL_RANDOM);
 
     // TEST - Global scope.
     // obj_effects.add(global, function() {
     //     show_debug_message(
-    //         $"|EFFECTS| Global scope: {self}");
+    //         $"|EFFECTS     | Global scope: {self}");
     //     return false;
     // }, EFFECT_INTERVAL_RANDOM);
 
@@ -66,7 +66,7 @@ obj_effects.add_named("orchestrator", self, function() {
         __name: "simple_scope"
     }, function() {
         show_debug_message(
-            $"|EFFECTS| Simple scope: {self}");
+            $"|EFFECTS     | Simple scope: {self}");
         return false;
     }, EFFECT_INTERVAL_RANDOM);
 
@@ -75,7 +75,7 @@ obj_effects.add_named("orchestrator", self, function() {
         __name: "step_from_scope",
         step: function() {
             show_debug_message(
-                $"|EFFECTS| Step method from scope: {self}");
+                $"|EFFECTS     | Step method from scope: {self}");
             return false;
         }
     }, undefined, EFFECT_INTERVAL_RANDOM);
@@ -85,12 +85,12 @@ obj_effects.add_named("orchestrator", self, function() {
         __name: "step_from_scope_replace",
         step: function() {
             show_debug_message(
-                $"|EFFECTS| Step method from scope (base): {self}");
+                $"|EFFECTS     | Step method from scope (base): {self}");
             return false;
         }
     }, function() {
         show_debug_message(
-            $"|EFFECTS| Step method from scope, replace: {self}");
+            $"|EFFECTS     | Step method from scope, replace: {self}");
         return false;
     }, EFFECT_INTERVAL_RANDOM);
 
@@ -99,20 +99,20 @@ obj_effects.add_named("orchestrator", self, function() {
         __name: "step_from_scope_inherit",
         step: function() {
             show_debug_message(
-                $"|EFFECTS| Step method from scope, inherit (base): {self}");
+                $"|EFFECTS     | Step method from scope, inherit (base): {self}");
             return false;
         }
     }, function() {
         var _keep_going = step();
         show_debug_message(
-            $"|EFFECTS| Step method from scope, inherit (derived): {self}");
+            $"|EFFECTS     | Step method from scope, inherit (derived): {self}");
         return _keep_going;
     }, EFFECT_INTERVAL_RANDOM);
 
     // TEST - Abstract base effect scope.
     obj_effects.add(new Effect(), function() {
         show_debug_message(
-            $"|EFFECTS| Abstract base effect scope: {self}");
+            $"|EFFECTS     | Abstract base effect scope: {self}");
         return false;
     }, EFFECT_INTERVAL_RANDOM);
 
@@ -123,7 +123,7 @@ obj_effects.add_named("orchestrator", self, function() {
     }), function() {
         var _keep_going = step();
         show_debug_message(
-            $"|ANIMATIONS| Animation scope, undefined context: {self}");
+            $"|ANIMATIONS  | Animation scope, undefined context: {self}");
         return _keep_going;
     }, EFFECT_INTERVAL_RANDOM);
 
@@ -134,7 +134,7 @@ obj_effects.add_named("orchestrator", self, function() {
     }, {}), function() {
         var _keep_going = step();
         show_debug_message(
-            $"|ANIMATIONS| Animation scope, empty context: {self}");
+            $"|ANIMATIONS  | Animation scope, empty context: {self}");
         return _keep_going;
     }, EFFECT_INTERVAL_RANDOM);
 
@@ -145,7 +145,7 @@ obj_effects.add_named("orchestrator", self, function() {
     }, self), function() {
         var _keep_going = step();
         show_debug_message(
-            $"|ANIMATIONS| Animation scope, self context: {self}");
+            $"|ANIMATIONS  | Animation scope, self context: {self}");
         return _keep_going;
     }, EFFECT_INTERVAL_RANDOM);
 
@@ -156,7 +156,7 @@ obj_effects.add_named("orchestrator", self, function() {
     }, other), function() {
         var _keep_going = step();
         show_debug_message(
-            $"|ANIMATIONS| Animation scope, other context: {self}");
+            $"|ANIMATIONS  | Animation scope, other context: {self}");
         return _keep_going;
     }, EFFECT_INTERVAL_RANDOM);
 
@@ -167,7 +167,7 @@ obj_effects.add_named("orchestrator", self, function() {
     // }, global), function() {
     //     var _keep_going = step();
     //     show_debug_message(
-    //         $"|ANIMATIONS| Animation scope, global context: {self}");
+    //         $"|ANIMATIONS  | Animation scope, global context: {self}");
     //     return _keep_going;
     // }, EFFECT_INTERVAL_RANDOM);
 
@@ -180,7 +180,7 @@ obj_effects.add_named("orchestrator", self, function() {
     }), function() {
         var _keep_going = step();
         show_debug_message(
-            $"|ANIMATIONS| Animation scope, simple context: {self}");
+            $"|ANIMATIONS  | Animation scope, simple context: {self}");
         return _keep_going;
     }, EFFECT_INTERVAL_RANDOM);
 
@@ -193,7 +193,7 @@ obj_effects.add_named("named_effect_preserve", {
     __name: "named_effect_original"
 }, function() {
     show_debug_message(
-        $"|EFFECTS| Named effect, preserve: {self}");
+        $"|EFFECTS     | Named effect, preserve: {self}");
     return true;
 }, false, EFFECT_INTERVAL_RANDOM);
 
@@ -202,7 +202,7 @@ obj_effects.add_named("named_effect_preserve", {
     __name: "named_effect_replaced"
 }, function() {
     show_debug_message(
-        $"|EFFECTS| Named effect, preserve: {self}");
+        $"|EFFECTS     | Named effect, preserve: {self}");
     return true;
 }, false, EFFECT_INTERVAL_RANDOM);
 
@@ -211,7 +211,7 @@ obj_effects.add_named("named_effect_replace", {
     __name: "named_effect_original"
 }, function() {
     show_debug_message(
-        $"|EFFECTS| Named effect, replace: {self}");
+        $"|EFFECTS     | Named effect, replace: {self}");
     return true;
 }, true, EFFECT_INTERVAL_RANDOM);
 
@@ -220,6 +220,6 @@ obj_effects.add_named("named_effect_replace", {
     __name: "named_effect_replaced"
 }, function() {
     show_debug_message(
-        $"|EFFECTS| Named effect, replace: {self}");
+        $"|EFFECTS     | Named effect, replace: {self}");
     return true;
 }, true, EFFECT_INTERVAL_RANDOM);
