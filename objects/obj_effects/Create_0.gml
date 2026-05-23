@@ -1,10 +1,11 @@
 /**
  * Registers a new anonymous effect.
- * The effect will run every time its interval is reached, as long as
- * its step function returns `true`.
- * @param {any} scope          The scope the effect will run in.
- * @param {function} step_func The function to run at every step.
- * @param {real} interval      The interval before running the step function, in frames.
+ * The effect will run every time its interval is reached, as long as its
+ * step function returns `true`. If `step_func` is `undefined`, `_scope`
+ * must expose a `step()` method, and that method will be called instead.
+ * @param {any} scope            The scope the effect will run in.
+ * @param {function} [step_func] The function to run at every step. Defaults to `undefined`.
+ * @param {real} [interval]      The interval before running the step function, in frames. Defaults to `1`.
  */
 function add(scope, step_func = undefined, interval = 1)
 {
@@ -15,28 +16,55 @@ function add(scope, step_func = undefined, interval = 1)
 
 /**
  * Registers a new named effect.
- * The effect will run every time its interval is reached, as long as
- * its step function returns `true`.
- * If an effect with the same name is already registered, the new
- * effect will be ignored and the existing one will continue to run,
- * unless `replace_existing` is `true`, in which case the previously
- * registered effect will be dropped instead.
- * @param {string} name                   The name of the effect.
- * @param {any} scope                     The scope the effect will run in.
- * @param {bool} [replace_existing]=false `true` to replace an existing effect with the same name.
- * @param {function} [step_func]          The function to run at every step.
- * @param {real} interval                 The interval before running the step function, in frames.
+ * The effect will run every time its interval is reached, as long as its
+ * step function returns `true`. If `step_func` is `undefined`, `_scope`
+ * must expose a `step()` method, and that method will be called instead.
+ * If an effect with the same name is already registered, the new effect
+ * will be ignored and the existing one will continue to run, unless
+ * `replace_existing` is `true`, in which case the previously registered
+ * effect will be discarded and replaced by the new one.
+ * @param {string} name             The name of the effect.
+ * @param {any} scope               The scope the effect will run in.
+ * @param {function} [step_func]    The function to run at every step. Defaults to `undefined`.
+ * @param {bool} [replace_existing] `true` to replace an existing effect with the same name. Defaults to `false`.
+ * @param {real} [interval]         The interval before running the step function, in frames. Defaults to `1`.
  */
 function add_named(
-    name, scope, replace_existing = false,
-    step_func = undefined, interval = 1)
+    name, scope, step_func = undefined,
+    replace_existing = false, interval = 1)
 {
-    // TODO
+    var _hash = variable_get_hash(name);
+    var _existing_entry = struct_get_from_hash(__named, _hash);
+    if (_existing_entry && !replace_existing) {
+        // An effect with the same name is already registered and we must
+        // not replace it, do nothing.
+        return;
+    }
+
+    var _entry = __make_effect_entry(
+        _hash, scope, step_func, interval);
+    if (_existing_entry) {
+        // Found existing effect entry, replace it.
+        __replace_effect_entry(_existing_entry, _entry);
+        delete _existing_entry;
+    } else {
+        // No existing effect entry, register the new one.
+        __append_effect_entry(_entry);
+    }
+}
+
+/**
+ * Returns the number of effect entries managed by this instance.
+ * @returns {real} The number of effect entries.
+ */
+function get_count()
+{
+    return __count;
 }
 
 /**
  * Appends specified effect entry to the linked list, and adds it to the
- * named entries structure if it is named.
+ * named entries structure if the effect is named.
  * @param {struct.EffectEntry} entry The effect entry to append.
  */
 function __append_effect_entry(entry)
@@ -56,6 +84,9 @@ function __append_effect_entry(entry)
         // Effect is named, add entry to the named entries structure.
         struct_set_from_hash(__named, entry.hash, entry);
     }
+
+    // Update effect entry count.
+    ++__count;
 }
 
 /**
@@ -81,7 +112,7 @@ function __make_effect_entry(hash, scope, step_func, interval)
     var _step_method = step_func ? method(_scope, step_func) : _scope.step;
 
     // We now have to "sandbox" the step method into its own caller scope,
-    // otherwise clever usage of `other` would allow the step function tp
+    // otherwise clever usage of `other` would allow the step function to
     // escape its scope, and provide it access to our internals, which we
     // still do not want.
     var _safe_step_method = method({
@@ -95,8 +126,9 @@ function __make_effect_entry(hash, scope, step_func, interval)
 }
 
 /**
- * Removes specified effect entry from the linked list, and from the named
- * entries strcture if it is named. The effect entry itself is not deleted.
+ * Removes specified effect entry from the linked list, and from
+ * the named entries strcture if the effect is named.
+ * The effect entry itself is not deleted.
  * @param {struct.EffectEntry} entry The effect entry to remove.
  */
 function __remove_effect_entry(entry)
@@ -131,6 +163,56 @@ function __remove_effect_entry(entry)
         // Effect is named, remove entry from the named entries structure.
         struct_remove_from_hash(__named, entry.hash);
     }
+
+    // Update effect entry count.
+    --__count;
+}
+
+/**
+ * Replaces an existing effect entry in the linked list with a new entry.
+ * Adds the new entry to the named entries structure if the effect is named.
+ * The new effect entry must not already be part of the linked list.
+ * Both effects must either be anonymous or share the same name.
+ * The replaced effect entry is not deleted.
+ * @param {struct.EffectEntry} existing_entry The effect entry to replace.
+ * @param {struct.EffectEntry} new_entry      The new effect entry.
+ */
+function __replace_effect_entry(existing_entry, new_entry)
+{
+    // Gather neighbours of existing entry for relinking.
+    var _prev = existing_entry.__prev;
+    var _next = existing_entry.__next;
+
+    // New entry must reference the same neighbours.
+    new_entry.__prev = _prev;
+    new_entry.__next = _next;
+
+    if (existing_entry == __head) {
+        // Existing entry is the head of the linked list, so that should
+        // point to the new entry instead.
+        __head = new_entry;
+    }
+    if (existing_entry == __tail) {
+        // Existing entry is the tail of the linked list, so that should
+        // point to the new entry instead.
+        __tail = new_entry;
+    }
+
+    if (_prev) {
+        // Existing entry has a predecessor, its successor should become
+        // the new entry.
+        _prev.__next = new_entry;
+    }
+    if (_next) {
+        // Existing entry has a successor, its predecessor should become
+        // the new entry.
+        _next.__prev = new_entry;
+    }
+
+    if (!is_undefined(new_entry.hash)) {
+        // New effect is named, add entry to the named entries structure.
+        struct_set_from_hash(__named, new_entry.hash, new_entry);
+    }
 }
 
 // The structure holding the named effect entries.
@@ -141,3 +223,6 @@ __head = undefined;
 
 // The tail of the linked list of effect entries.
 __tail = undefined;
+
+// The number of effect entries in the linked list.
+__count = 0;
