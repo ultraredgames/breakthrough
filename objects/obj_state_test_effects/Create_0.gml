@@ -118,8 +118,8 @@ obj_effects.add_named("orchestrator", self, function() {
 
     // TEST - Animation scope, undefined context.
     obj_effects.add(new Animation(1, {
-        foo: { TODO: "foo" },
-        bar: { TODO: "bar" }
+        a: { from: 0, to: -1 },
+        b: { from: 0, to: 1 }
     }), function() {
         var _keep_going = step();
         show_debug_message(
@@ -129,8 +129,8 @@ obj_effects.add_named("orchestrator", self, function() {
 
     // TEST - Animation scope, empty context.
     obj_effects.add(new Animation(1, {
-        foo: { TODO: "foo" },
-        bar: { TODO: "bar" }
+        a: { from: 0, to: -1 },
+        b: { from: 0, to: 1 }
     }, {}), function() {
         var _keep_going = step();
         show_debug_message(
@@ -140,8 +140,8 @@ obj_effects.add_named("orchestrator", self, function() {
 
     // TEST - Animation scope, self context.
     obj_effects.add(new Animation(1, {
-        foo: { TODO: "foo" },
-        bar: { TODO: "bar" }
+        a: { from: 0, to: -1 },
+        b: { from: 0, to: 1 }
     }, self), function() {
         var _keep_going = step();
         show_debug_message(
@@ -151,8 +151,8 @@ obj_effects.add_named("orchestrator", self, function() {
 
     // TEST - Animation scope, other context.
     obj_effects.add(new Animation(1, {
-        foo: { TODO: "foo" },
-        bar: { TODO: "bar" }
+        a: { from: 0, to: -1 },
+        b: { from: 0, to: 1 }
     }, other), function() {
         var _keep_going = step();
         show_debug_message(
@@ -162,8 +162,8 @@ obj_effects.add_named("orchestrator", self, function() {
 
     // TEST - Animation scope, global context.
     // obj_effects.add(new Animation(1, {
-    //     foo: { TODO: "foo" },
-    //     bar: { TODO: "bar" }
+    //     a: { from: 0, to: -1 },
+    //     b: { from: 0, to: 1 }
     // }, global), function() {
     //     var _keep_going = step();
     //     show_debug_message(
@@ -173,8 +173,8 @@ obj_effects.add_named("orchestrator", self, function() {
 
     // TEST - Animation scope, simple context.
     obj_effects.add(new Animation(1, {
-        foo: { TODO: "foo" },
-        bar: { TODO: "bar" }
+        a: { from: 0, to: -1 },
+        b: { from: 0, to: 1 }
     }, {
         __name: "__simple_context"
     }), function() {
