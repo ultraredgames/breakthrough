@@ -45,7 +45,7 @@ function Animation(
         throw $"Invalid animation duration {_duration}.";
     }
 
-    duration = real(_duration);  // FIXME - Required for real division?
+    duration = _duration;
     variables = _variables;
     context = _context;
     elapsed = 0;

@@ -1,5 +1,2 @@
 // Go to previous page.
-if (--current_page < 0) {
-    // Wrap around.
-    current_page = array_length(easing_pages) - 1;
-}
+__switch_to_page(__current_page_index - 1);
