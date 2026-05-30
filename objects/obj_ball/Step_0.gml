@@ -9,6 +9,9 @@ if (!moving) {
 //		audio_play_sound(snd_click, 0, false);
 	}
 }
+if (magnet) {
+	speed = BALL_MIDDLE_SPEED;
+}
 // Bounce logic
 // Check if the ball is colliding with the left or right side of the room
 if (bbox_left < GAME_AREA_LEFT || bbox_right > GAME_AREA_RIGHT) {
@@ -17,7 +20,7 @@ if (bbox_left < GAME_AREA_LEFT || bbox_right > GAME_AREA_RIGHT) {
 		GAME_AREA_RIGHT - sprite_get_xoffset(sprite_index));
 	hspeed *= -1;
 	// With each bounce, increase the ball speed up to a limit of 12 pixels per frame.
-	if (speed < 16) {
+	if (speed < BALL_TOP_SPEED) {
 		speed += 0.1333;
 	}
 //	audio_play_sound(snd_bounce, 0, false, 1, 0, random_range(0.3, 0.6));
@@ -27,7 +30,7 @@ if (bbox_left < GAME_AREA_LEFT || bbox_right > GAME_AREA_RIGHT) {
 if (bbox_top < GAME_AREA_TOP) {
 	vspeed *= -1;
 	// With each bounce, increase the ball speed up to a limit of 12 pixels per frame.
-	if (speed < 16) {
+	if (speed < BALL_TOP_SPEED) {
 		speed += 0.1333;
 	}
 //	audio_play_sound(snd_bounce, 0, false, 1, 0, random_range(0.3, 0.6));
