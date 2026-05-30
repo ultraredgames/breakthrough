@@ -54,11 +54,8 @@ draw_text_transformed(
     1.5, 1.5, 0);
 
 // Compute origin of first graph.
-// FIXME - Need a vec struct.
-var _origin = {
-    x: GRAPH_MARGIN,
-    y: GRAPH_SIZE + (room_height - GRAPH_SIZE) / 2
-};
+var _origin_x = GRAPH_MARGIN;
+var _origin_y = GRAPH_SIZE + (room_height - GRAPH_SIZE) / 2;
 
 // Draw graphs for the easing functions in the current page.
 var _easing_func_names = __easing_pages[__current_page_index];
@@ -68,18 +65,18 @@ for (var _i = 0; _i < array_length(_easing_func_names); ++_i) {
         // Draw graph axes.
         draw_set_color(c_dkgray);
         draw_arrow(
-            _origin.x, _origin.y,
-            _origin.x + GRAPH_SIZE, _origin.y,
+            _origin_x, _origin_y,
+            _origin_x + GRAPH_SIZE, _origin_y,
             GRAPH_AXIS_ARROW_SIZE);
         draw_arrow(
-            _origin.x, _origin.y,
-            _origin.x, _origin.y - GRAPH_SIZE,
+            _origin_x, _origin_y,
+            _origin_x, _origin_y - GRAPH_SIZE,
             GRAPH_AXIS_ARROW_SIZE);
 
         // Draw graph label.
         draw_set_color(c_white);
         draw_text(
-            _origin.x + GRAPH_SIZE / 2, _origin.y + 4,
+            _origin_x + GRAPH_SIZE / 2, _origin_y + GRAPH_LABEL_OFFSET,
             _easing_func_name);
 
         // Fetch current easing function by name.
@@ -87,7 +84,7 @@ for (var _i = 0; _i < array_length(_easing_func_names); ++_i) {
         var _variables = __animated_variables[$ $"animation.{_i}"];
         if (_easing_func && _variables) {
             // Plot easing function.
-            var _prev_point = _origin;
+            var _prev_vertex = undefined;
             for (var _x = 0; _x < GRAPH_SIZE; ++_x) {
                 // Highlight current point in the graph.
                 var _color = merge_color(
@@ -96,25 +93,27 @@ for (var _i = 0; _i < array_length(_easing_func_names); ++_i) {
                         abs(_x - _variables.x.value) * 4 / GRAPH_SIZE));
 
                 var _y = lerp(0, GRAPH_SIZE, _easing_func(_x / GRAPH_SIZE));
-                // FIXME - Need a vec struct.
-                var _current_point = {
-                    x: _origin.x + _x,
-                    y: _origin.y - _y
+                var _current_vertex = {
+                    x: _origin_x + _x,
+                    y: _origin_y - _y,
+                    color: _color
                 };
-                draw_line_color(
-                    _prev_point.x, _prev_point.y,
-                    _current_point.x, _current_point.y,
-                    _color, _color);
-                _prev_point = _current_point;
+                if (_prev_vertex) {
+                    draw_line_color(
+                        _prev_vertex.x, _prev_vertex.y,
+                        _current_vertex.x, _current_vertex.y,
+                        _prev_vertex.color, _current_vertex.color);
+                }
+                _prev_vertex = _current_vertex;
             }
 
             // Draw animated ball at its current vertical position.
             draw_sprite_ext(
-                spr_ball, 0, _origin.x + GRAPH_SIZE + GRAPH_BALL_OFFSET,
-                _origin.y - _variables.y.value, 1, 1, 0, c_aqua, 1);
+                spr_ball, 0, _origin_x + GRAPH_SIZE + GRAPH_BALL_OFFSET,
+                _origin_y - _variables.y.value, 1, 1, 0, c_aqua, 1);
         }
     }
 
     // Move to origin of next graph.
-    _origin.x += GRAPH_FULL_WIDTH + GRAPH_MARGIN;
+    _origin_x += GRAPH_FULL_WIDTH + GRAPH_MARGIN;
 }

@@ -97,15 +97,15 @@ function __run_animation(animation_name, easing_func_name)
                     context.animation_name, context, function() {
                         obj_state_test_easing.__run_animation(
                             animation_name, easing_func_name);
-                    // Previous animation has just been replaced,
-                    // return `true` to avoid a double remove.
-                    // FIME - We may want to prevent this situation
-                    // in `obj_effects` in the first place.
+                        // Previous animation has just been replaced,
+                        // return `true` to avoid a double remove.
+                        // FIXME - We may want to prevent this situation
+                        // in `obj_effects` in the first place.
                         return true;
                     }, true, ANIMATION_DELAY)
                 // Previous animation has just been replaced,
                 // return `true` to avoid a double remove.
-                // FIME - We may want to prevent this situation
+                // FIXME - We may want to prevent this situation
                 // in `obj_effects` in the first place.
                 return true;
             }
