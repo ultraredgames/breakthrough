@@ -63,6 +63,20 @@ function get_count()
 }
 
 /**
+ * Unregisters and discards the effect with specified name.
+ * The removed effect will never run again from this point onward.
+ * @param {string} name The name of the effect to remove.
+ */
+function remove(name)
+{
+    var _entry = __named[$ name];
+    if (_entry) {
+        __remove_effect_entry(_entry);
+        delete _entry;
+    }
+}
+
+/**
  * Appends specified effect entry to the linked list, and adds it to the
  * named entries structure if the effect is named.
  * @param {struct.EffectEntry} entry The effect entry to append.
@@ -127,7 +141,7 @@ function __make_effect_entry(hash, scope, step_func, interval)
 
 /**
  * Removes specified effect entry from the linked list, and from
- * the named entries strcture if the effect is named.
+ * the named entries structure if the effect is named.
  * The effect entry itself is not deleted.
  * @param {struct.EffectEntry} entry The effect entry to remove.
  */

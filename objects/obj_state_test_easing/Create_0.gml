@@ -58,14 +58,9 @@ function __switch_to_page(page_index)
             // animation if necessary.
             __run_animation(_animation_name, _easing_func_name);
         } else {
-            // Nothing to animate here, but we still have to replace the
-            // existing animation. However, we do not have to preserve any
-            // context and we can schedule an effect that will self-destruct
-            // during the next frame.
-            // FIXME - We may need an `obj_effects.cancel()` method.
-            obj_effects.add_named(_animation_name, {}, function() {
-                return false;
-            }, true);
+            // Nothing to animate here, but we still have to discard the
+            // existing animation or delay effect.
+            obj_effects.remove(_animation_name);
             __animated_variables[$ _animation_name] = undefined;
         }
     }
@@ -94,11 +89,12 @@ function __run_animation(animation_name, easing_func_name)
             var _keep_going = step();
             if (!_keep_going) {
                 // Animation ends this frame, restart it after delay.
-                obj_effects.add_named(context.animation_name, context, function() {
-                    obj_state_test_easing.__run_animation(
-                        animation_name, easing_func_name);
-                    return false;
-                }, true, ANIMATION_DELAY)
+                obj_effects.add_named(
+                    context.animation_name, context, function() {
+                        obj_state_test_easing.__run_animation(
+                            animation_name, easing_func_name);
+                        return false;
+                    }, true, ANIMATION_DELAY);
             }
             return _keep_going;
         }, true);

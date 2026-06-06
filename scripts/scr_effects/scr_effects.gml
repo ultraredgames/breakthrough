@@ -1,8 +1,8 @@
 /**
  * Represents an effect entry.
- * Keeps track of the hash, step method and interval of a running effect,
+ * Keeps track of the owner,hash, step method and interval of a running effect,
  * as well as the elapsed frames since the last call to the step method.
- * @param {asset.gmobject} _owner The instance owning the effect entry.
+ * @param {asset.gmobject} _owner The instance of `obj_effects` that owns the effect entry.
  * @param {real} _hash            The hash of the name of the effect, or `undefined` if the effect is not named.
  * @param {function} _step_method The method to run at every step.
  * @param {real} _interval        The interval before running the step method, in frames.
@@ -19,8 +19,7 @@ function EffectEntry(_owner, _hash, _step_method, _interval) constructor
     interval = _interval;
     elapsed = 0;
 
-    // Maintain references to owner instance and neighbouring
-    // linked list entries.
+    // Maintain references to owner instance and neighbouring linked list entries.
     __owner = _owner;
     __prev = undefined;
     __next = undefined;
@@ -39,8 +38,7 @@ function Effect() constructor
  * @param {any} _variables The struct holding the variables to animate.
  * @param {any} [_context] The context provided to the step function. Defaults to `undefined`.
  */
-function Animation(
-    _duration, _variables, _context = undefined)
+function Animation(_duration, _variables, _context = undefined)
 : Effect() constructor
 {
     if (_duration <= 0) {
