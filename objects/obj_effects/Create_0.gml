@@ -122,7 +122,7 @@ function __make_effect_entry(hash, scope, step_func, interval)
     });
 
     // Build and return effect entry.
-    return new EffectEntry(hash, _safe_step_method, interval);
+    return new EffectEntry(self, hash, _safe_step_method, interval);
 }
 
 /**
@@ -133,9 +133,22 @@ function __make_effect_entry(hash, scope, step_func, interval)
  */
 function __remove_effect_entry(entry)
 {
+    if (!entry.__owner) {
+        // This happens when an effect entry is replaced or removed,
+        // then returns `false` from its step function in the same frame.
+        // This pattern is so common in my early tests that I'm strongly
+        // inclined to allow it.
+        return;
+    }
+
     // Gather neighbouring entries for relinking.
     var _prev = entry.__prev;
     var _next = entry.__next;
+
+    // Reset entry to remove.
+    entry.__owner = undefined;
+    entry.__prev = undefined;
+    entry.__next = undefined;
 
     if (entry == __head) {
         // Entry is the head of the linked list, so that should point
@@ -183,7 +196,12 @@ function __replace_effect_entry(existing_entry, new_entry)
     var _prev = existing_entry.__prev;
     var _next = existing_entry.__next;
 
-    // New entry must reference the same neighbours.
+    // Reset existing entry.
+    existing_entry.__owner = undefined;
+    existing_entry.__prev = undefined;
+    existing_entry.__next = undefined;
+
+    // New entry must now reference these neighbours.
     new_entry.__prev = _prev;
     new_entry.__next = _next;
 

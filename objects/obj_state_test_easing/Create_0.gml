@@ -91,25 +91,16 @@ function __run_animation(animation_name, easing_func_name)
             animation_name,
             easing_func_name
         }), function() {
-            if (!step()) {
+            var _keep_going = step();
+            if (!_keep_going) {
                 // Animation ends this frame, restart it after delay.
-                obj_effects.add_named(
-                    context.animation_name, context, function() {
-                        obj_state_test_easing.__run_animation(
-                            animation_name, easing_func_name);
-                        // Previous animation has just been replaced,
-                        // return `true` to avoid a double remove.
-                        // FIXME - We may want to prevent this situation
-                        // in `obj_effects` in the first place.
-                        return true;
-                    }, true, ANIMATION_DELAY)
-                // Previous animation has just been replaced,
-                // return `true` to avoid a double remove.
-                // FIXME - We may want to prevent this situation
-                // in `obj_effects` in the first place.
-                return true;
+                obj_effects.add_named(context.animation_name, context, function() {
+                    obj_state_test_easing.__run_animation(
+                        animation_name, easing_func_name);
+                    return false;
+                }, true, ANIMATION_DELAY)
             }
-            return true;
+            return _keep_going;
         }, true);
     __animated_variables[$ animation_name] = _variables;
 }
