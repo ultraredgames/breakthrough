@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_effects",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"Infra",
+    "path":"folders/Scripts/Infra.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

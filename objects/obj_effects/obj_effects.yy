@@ -10,8 +10,8 @@
   "name":"obj_effects",
   "overriddenProperties":[],
   "parent":{
-    "name":"Effects",
-    "path":"folders/Objects/Effects.yy",
+    "name":"Infra",
+    "path":"folders/Objects/Infra.yy",
   },
   "parentObjectId":null,
   "persistent":false,
