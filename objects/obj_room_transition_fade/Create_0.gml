@@ -1,4 +1,4 @@
-// Initialize member variables
+// Initialize member variables.
 room_index = noone;
 duration = 30;
 elapsed = 0;

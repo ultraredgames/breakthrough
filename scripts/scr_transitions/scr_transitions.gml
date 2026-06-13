@@ -16,7 +16,7 @@ enum FadeDirection
  */
 function fade_room_goto(room_index, duration = 30, color = c_black)
 {
-	if (instance_exists(obj_room_transition_old)) {
+	if (instance_exists(obj_room_transition)) {
 		// Another room transition is active, bail out.
 		return;
 	}
@@ -37,7 +37,7 @@ function fade_room_goto(room_index, duration = 30, color = c_black)
 	
 	// Create room transition object instance.
 	var _obj = instance_create_layer(0, 0, ROOM_TRANSITION_LAYER,
-		obj_room_transition_fade_old);
+		obj_room_transition_fade);
 	_obj.room_index = room_index;
 	_obj.duration = duration;
 	_obj.fade_color = color;
