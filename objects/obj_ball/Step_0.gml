@@ -38,17 +38,21 @@ if (bbox_top < GAME_AREA_TOP) {
 } else {
 	// Check if the ball is leaving the bottom of the room.
 	if (bbox_bottom > room_height + TILE_SIZE * 2) {
-		global.player_lives -= 1;
-		if (global.player_lives <= 0) {
-			// Check for new high score.
-			if (global.player_score > global.high_score) {
-				global.high_score = global.player_score;
-		    }
-			room_goto(rm_gameover);
+		if (instance_number(obj_ball_duplicate) > 0) {
+			direction -= 180;
 		} else {
-			// Only create a new ball if the player has lives.
-		    instance_create_layer(obj_player.x, ystart, layer, obj_ball);
-			instance_destroy();
+			global.player_lives -= 1;
+			if (global.player_lives <= 0) {
+				// Check for new high score.
+				if (global.player_score > global.high_score) {
+					global.high_score = global.player_score;
+			    }
+				room_goto(rm_gameover);
+			} else {
+				// Only create a new ball if the player has lives.
+			    instance_create_layer(obj_player.x, ystart, layer, obj_ball);
+				instance_destroy();
+			}
 		}
 	}
 }
