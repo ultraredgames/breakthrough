@@ -12,3 +12,9 @@
 
 // The top speed of the ball, in pixels per frame.
 #macro BALL_TOP_SPEED 16
+
+// The opacity of drop shadows.
+#macro DROP_SHADOW_ALPHA 0.25
+
+// The offset of drop shadows, in pixels.
+#macro DROP_SHADOW_OFFSET (TILE_SIZE / 2)

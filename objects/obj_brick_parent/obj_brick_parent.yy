@@ -12,7 +12,10 @@
     "name":"Bricks",
     "path":"folders/Objects/Bricks.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_shadow_caster_parent",
+    "path":"objects/obj_shadow_caster_parent/obj_shadow_caster_parent.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
